@@ -10,21 +10,21 @@
 	function FoundItemsDirective() {
 	  var ddo = {
 	    scope: {
-	      foundItems: '<',
+	      items: '<',
 	      onRemove: '&'
-	    }
-/*	    controller: NarrowItDownDirectiveController,
+	    },
+	    controller: NarrowItDownDirectiveController,
 	    controllerAs: 'narrowCtrl',
-	    bindToController: true*/
+	    bindToController: true
 	  };
 
 	  return ddo;
 	}
 
-/*	function NarrowItDownDirectiveController() {
+	function NarrowItDownDirectiveController() {
 		var found=this;
 		console.log("directive controller"+found);
-	}*/
+	}
 
 	NarrowItDownController.$inject = ['MenuSearchService'];
 	function NarrowItDownController(MenuSearchService){
