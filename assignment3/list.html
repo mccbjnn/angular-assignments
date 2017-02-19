@@ -1,5 +1,6 @@
-<ol>
+<ol class="col-sm-12 list-group">
   <li ng-repeat="item in narrowCtrl.found">
    {{ item.name }}
+    <button class="btn btn-primary" ng-click="narrowCtrl.onRemove({index: $index});">Remove Item</button>
   </li>
 </ol>

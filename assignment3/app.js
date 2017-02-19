@@ -44,6 +44,10 @@
 	    /*console.log("functia din controller");*/
 	  	};
 
+	  	narrowCtrl.removeItem = function (itemIndex) {
+		    MenuSearchService.removeItem(itemIndex);
+		  };
+
 	 
 	};
 	MenuSearchService.$inject = ['$http', 'ApiUrl'];
@@ -70,6 +74,9 @@
 						});
 			return response;
 		};
+	service.removeItem = function (itemIndex) {
+	    foundItems.splice(itemIndex, 1);
+	  };
 
 	};
 	
