@@ -12,54 +12,67 @@
 	    scope: {
 	      items: '<',
 	      onRemove: '&'
-	    },
-	    controller: NarrowItDownDirectiveController,
-	    controllerAs: 'narrowCtrl',
-	    bindToController: true
+	    }
+/*	    controller: NarrowItDownDirectiveController,*/
+/*	    controllerAs: 'narrowCtrl',
+	    bindToController: true*/
 	  };
 
 	  return ddo;
 	}
 
-	function NarrowItDownDirectiveController() {
+/*	function NarrowItDownDirectiveController() {
 		var found=this;
-		console.log("directive controller"+found);
-	}
+		console.log("directive controller"+JSON.stringify(found));
+	}*/
 
 	NarrowItDownController.$inject = ['MenuSearchService'];
 	function NarrowItDownController(MenuSearchService){
 		var narrowCtrl=this;
-		var promise=MenuSearchService.getMatchedMenuItems();
-
-		promise.then(function (response) {
-		    narrowCtrl.found = response;
-			console.log("found in ctrl"+narrowCtrl.found);
-
+		narrowCtrl.search="";
+		narrowCtrl.getMatchedMenuItems=function(){
+			var promise=MenuSearchService.getMatchedMenuItems(narrowCtrl.search);
+			promise.then(function (response) {
+		    narrowCtrl.found=response;
+		    console.log("inside promise"+JSON.stringify(narrowCtrl.found));
+	 		return narrowCtrl.found;
 		  })
 		  .catch(function (error) {
 		    console.log("Something went terribly wrong.");
 		  });	
 
+		}
+		
+
 		narrowCtrl.removeItem = function () {
-	    console.log("functia din controller");
+	    /*console.log("functia din controller");*/
 	  	};
+
+	 
 	};
 	MenuSearchService.$inject = ['$http', 'ApiUrl'];
 	function MenuSearchService($http, ApiUrl){
 		var service = this;
+		var foundItems=[]
 		service.getMatchedMenuItems=function(searchTerm){
+			var search=searchTerm;
+			console.log(searchTerm);
 			var response= $http({
 					      method: "GET",
 					      url: ApiUrl
 					    })
-					.then(function (result) {
+						.then(function (result) {
 						    // process result and only keep items that match
-						    var foundItems=result.data;
-                             console.log(JSON.stringify(result.data));
+						    var all=result.data.menu_items;
+							for(var i = 0; i < all.length; i++){
+						    	if(all[i].description.indexOf(searchTerm) !== -1){
+						    		foundItems.push(all[i]);
+						    		console.log("in for"+all[i]);
+						    		}
+						    	}
 						    // return processed items
 						    return foundItems;
 						});
-
 			return response;
 		};
 	};
