@@ -14,7 +14,7 @@
 	      found: '<',
 	      onRemove: '&'
 	    },
-	    controller: NarrowItDownDirectiveController,
+	    controller: NarrowItDownController,
 	    controllerAs: 'narrowCtrl',
 	    bindToController: true
 	  };
@@ -22,14 +22,15 @@
 	  return ddo;
 	}
 
-	function NarrowItDownDirectiveController() {
-	}
-
 	NarrowItDownController.$inject = ['MenuSearchService'];
 	function NarrowItDownController(MenuSearchService){
 		var narrowCtrl=this;
 		narrowCtrl.search="";
 		narrowCtrl.getMatchedMenuItems=function(){
+			    if (narrowCtrl.search === "") {
+			      narrowCtrl.found = [];
+			      return;
+			    }
 			var promise=MenuSearchService.getMatchedMenuItems(narrowCtrl.search);
 			promise.then(function (response) {
 		    narrowCtrl.found=response;
@@ -40,9 +41,6 @@
 		  });	
  		
 		}
-		narrowCtrl.removeItem = function () {
-	    /*console.log("functia din controller");*/
-	  	};
 
 	  	narrowCtrl.removeItem = function (itemIndex) {
 		    MenuSearchService.removeItem(itemIndex);
@@ -56,8 +54,7 @@
 		var foundItems=[]
 		service.getMatchedMenuItems=function(searchTerm){
 			var search=searchTerm;
-			console.log(searchTerm);
-			var response= $http({
+			return $http({
 					      method: "GET",
 					      url: ApiUrl
 					    })
@@ -72,7 +69,7 @@
 						    // return processed items
 						    return foundItems;
 						});
-			return response;
+			
 		};
 	service.removeItem = function (itemIndex) {
 	    foundItems.splice(itemIndex, 1);
