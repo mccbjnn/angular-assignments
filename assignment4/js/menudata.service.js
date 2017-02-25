@@ -21,7 +21,9 @@ function MenuDataService($http) {
         }
         console.log("found items"+foundItems);
         return foundItems;
-    });
+    }, function (error) {
+        console.error(error);
+      });
   };
 }
 
