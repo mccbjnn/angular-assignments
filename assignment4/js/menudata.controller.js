@@ -5,10 +5,11 @@ angular.module('data')
 .controller('DataController', DataController);
 
 
-DataController.$inject = ['foundItems'];
-function DataController(foundItems) {
+DataController.$inject = ['MenuDataService','foundItems'];
+function DataController(MenuDataService,foundItems) {
   var dataList = this;
   dataList.foundItems=foundItems;
+ 
 }
 
 })();
