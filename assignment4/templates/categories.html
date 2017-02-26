@@ -1,8 +1,9 @@
 <ul>
   <li ng-repeat="item in dataList.foundItems"
   	  ui-sref="items({itemId: item.short_name})">
-    {{ item.name }}{{ item.short_name}}
+    {{ item.name }}
   </li>
 </ul>
 <items-list item-detail="itemsDetail.itemDetail"><items-list>
+
 
