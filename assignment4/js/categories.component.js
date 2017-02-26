@@ -3,9 +3,9 @@
 
 angular.module('data')
 .component('categoriesList', {
-  templateUrl: 'templates/categories.html',
+  templateUrl:'templates/categories.html',
   bindings: {
-    foundItems: '<'
+    foundItems:'<'
   }
 });
 

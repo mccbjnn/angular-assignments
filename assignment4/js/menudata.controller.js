@@ -4,12 +4,11 @@
 angular.module('data')
 .controller('DataController', DataController);
 
-
-DataController.$inject = ['MenuDataService','foundItems'];
-function DataController(MenuDataService,foundItems) {
+DataController.$inject = ['receivedItems'];
+function DataController(receivedItems) {
   var dataList = this;
-  dataList.foundItems=foundItems;
- 
+  dataList.foundItems=receivedItems;
+  console.log("DataController"+JSON.stringify(receivedItems))
 }
 
 })();

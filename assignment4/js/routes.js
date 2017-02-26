@@ -22,15 +22,28 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
     url: '/categories',
     templateUrl: 'templates/categories.html',
     controller: 'DataController as dataList',
-     resolve: {
-      foundItems: ['MenuDataService ', function (MenuDataService ) {
-        console.log('intra aici;');
+    resolve: {
+      receivedItems: ['MenuDataService', function (MenuDataService) {
         return MenuDataService.getAllCategories();
       }]
+    },function(err){
+      return err;
     }
   })
 
-
+    .state('items', {
+    url: '/items/{itemId}',
+    templateUrl: 'templates/items.html',
+    controller: "ItemsController as itemsDetail",
+    resolve: {
+      item: ['$stateParams', 'MenuDataService',
+            function ($stateParams, MenuDataService) {
+              return MenuDataService.getItemsForCategory($stateParams.itemId);
+            }]
+    },function(err){
+      return err;
+    }
+  });
 
 }
 
